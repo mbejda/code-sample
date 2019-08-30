@@ -21,3 +21,38 @@ module.exports.create = async event => {
     }
 };
 
+
+
+module.exports.list = async event => {
+    return {
+        statusCode: 200,
+        body: ""
+    };
+};
+
+
+
+
+module.exports.get = async event => {
+    return {
+        statusCode: 200,
+        body: ""
+    };
+};
+
+module.exports.update = async event => {
+    return {
+        statusCode: 200,
+        body: ""
+    };
+};
+
+
+
+module.exports.delete = async event => {
+    return {
+        statusCode: 200,
+        body: ""
+    };
+};
+
