@@ -9,12 +9,11 @@ describe('integration',  () => {
                 .post(`/projects`)
                 .expect(200);
             expect(response.body.response).toBeDefined();
-            return done();
-
         }catch(e){
             expect(e).toBeNull();
-            return done();
 
         }
+        return done();
+
     },10000);
 });
