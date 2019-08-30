@@ -1,0 +1,54 @@
+service: project
+provider:
+  name: aws
+  runtime: nodejs10.x
+  stage: dev
+  region: us-east-1
+  environment:
+    DOMAIN: ${self:custom.config.domain}
+    REGION: ${self:custom.config.region}
+custom:
+  config:
+    certificateName: ${file(../../config.${self:provider.stage}.json):CERTIFICATE_NAME}
+    apiEndpoint: ${file(../../config.${self:provider.stage}.json):API_ENDPOINT}
+    domain: ${file(../../config.${self:provider.stage}.json):DOMAIN}
+    region: ${file(../../config.${self:provider.stage}.json):REGION}
+    route53HostName: ${file(../../config.${self:provider.stage}.json):ROUTE53_HOST_NAME}
+    cloudformationRole: ${file(../../config.${self:provider.stage}.json):CLOUDFORMATION_ROLE}
+  customDomain:
+    domainName: ${self:custom.config.apiEndpoint}
+    stage: ${self:provider.stage}
+    basePath: v1
+    certificateName: ${self:custom.config.certificateName}
+    createRoute53Record: true
+    endpointType: 'regional'
+functions:
+  create:
+    environment:
+      CLOUDFORMATION_ROLE: ${self:custom.config.cloudformationRole}
+      DOMAIN: ${self:custom.config.domain}
+      REGION: ${self:custom.config.region}
+    handler: handler.create
+    events:
+      - http: post projects
+  get:
+    handler: handler.get
+    events:
+      - http: get project
+  list:
+    handler: handler.list
+    events:
+      - http: get projects
+  update:
+    handler: handler.update
+    events:
+      - http: put projects
+  delete:
+    handler: handler.delete
+    events:
+      - http: delete projects
+
+plugins:
+  - serverless-dynamodb-local
+  - serverless-offline
+  - serverless-domain-manager

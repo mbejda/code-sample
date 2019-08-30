@@ -1,0 +1,8 @@
+{
+  "CERTIFICATE_NAME" : "*.rlty.app",
+  "DOMAIN": "rlty.app",
+  "ROUTE53_HOST_NAME": "rlty.app.",
+  "API_ENDPOINT": "api.rlty.app",
+  "REGION": "us-east-1",
+  "CLOUDFORMATION_ROLE": "arn:aws:iam::903500249775:role/rltyapp-cloudformation-role"
+}

@@ -1,0 +1,44 @@
+# Create s3 hosting
+# Testing instructions
+# aws cloudformation create-stack --stack-name myS3 --template-body file://stack.yml --parameters ParameterKey=SubDomain,ParameterValue=test.rlty.app
+# aws cloudformation delete-stack --stack-name myS3
+
+
+AWSTemplateFormatVersion: '2010-09-09'
+
+
+Parameters:
+  SubDomain:
+    Description: Full domain name for website
+    Type: String
+  ApexDomain:
+    Default: "rlty.app."
+    Description: Route53 Hosted Name
+    Type: String
+Resources:
+  MainBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref SubDomain
+      AccessControl: PublicRead
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        ErrorDocument: 404.html
+  DNS:
+    Type: AWS::Route53::RecordSetGroup
+    Properties:
+      HostedZoneName: !Ref ApexDomain
+      Comment: Zone apex alias.
+      RecordSets:
+        -
+          Name: !Ref SubDomain
+          Type: CNAME
+          TTL: 900
+          ResourceRecords:
+            - !GetAtt MainBucket.DomainName
+Outputs:
+  WebsiteURL:
+    Value: !GetAtt MainBucket.WebsiteURL
+    Description: URL for website hosted on S3
+
+
