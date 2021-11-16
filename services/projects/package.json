@@ -15,7 +15,7 @@
   },
   "description": "",
   "dependencies": {
-    "aws-sdk": "2.520.0",
+    "aws-sdk": "2.814.0",
     "env-create": "1.1.1",
     "serverless-dynamodb-local": "0.2.38",
     "unique-names-generator": "3.0.0"
