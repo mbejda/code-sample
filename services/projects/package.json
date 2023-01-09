@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "serverless-domain-manager": "3.3.0",
-    "serverless-offline": "5.10.1",
+    "serverless-offline": "12.0.4",
     "supertest": "4.0.2"
   }
 }
